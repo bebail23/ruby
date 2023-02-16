@@ -1,0 +1,17 @@
+guessedLetters = []
+# Hard-coded words for game
+words = ["cat", "dog", "turtle", "elephant", "bird"]
+
+# Game randomly selects one of the words to use
+# https://www.educative.io/answers/what-is-arraysample-in-ruby
+correctWord = words.sample
+
+# Asks for user input for their letter guess and add to array of already guessed letters
+puts("Guess a letter ")
+letterGuess = gets 
+guessedLetters.push(letterGuess)
+# Check if letter is a duplicate
+# Check if letter is in word 
+# Display updated filled in guessed
+# If letter not in word, draw next part of snowman 
+# Check to see if user has any guesses left
