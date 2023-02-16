@@ -71,6 +71,15 @@ while numberOfGuesses > 0 and wordGuessed == false
         puts("Sorry, you lost the game. The correct word was " + correctWord + ".")
         break
     end
+
+    # Check to see if user solved through letter guesses
+    if (numberOfLetters.include? '_ ') == false
+        puts("\n")
+        puts("Congratulations you won the game! The correct word was " + correctWord + ".")
+        wordGuessed = true
+        break
+    end
+
     # Asks user if they would like to solve
     puts("\n")
     puts("Would you like to solve the word? (yes/no)")
