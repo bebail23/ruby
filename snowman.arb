@@ -1,6 +1,10 @@
+# Variable declarations
 guessedLetters = []
 numberOfLetters = []
+duplicate = false
 letterInWord = false
+wordGuessed = false
+numberOfGuesses = 6;
 # Hard-coded words for game
 words = ["cat", "dog", "turtle", "elephant", "bird"]
 
@@ -15,35 +19,79 @@ end
 for i in 0..correctWord.length-1
     print(numberOfLetters[i])
 end
-# Asks for user input for their letter guess and add to array of already guessed letters
-# Remove newline after input: https://blog.udemy.com/ruby-chomp/ 
-puts("\n")
-puts("\n")
-puts("Guess a letter ")
-letterGuess = gets 
-letterGuess = letterGuess.chomp
-guessedLetters.push(letterGuess)
 
-# Check if letter is a duplicate
-if guessedLetters.length > 1
-    for i in 0..correctWord.length-1
-        if letterGuess == guessedLetters[i]
-            puts("Sorry that is a duplicate guess. Guess again.")
+# While user still has guesses left and user hasn't won, keep asking for guesses 
+while numberOfGuesses > 0 and wordGuessed == false
+    # Asks for user input for their letter guess and add to array of already guessed letters
+    # Remove newline after input: https://blog.udemy.com/ruby-chomp/ 
+    puts("\n")
+    puts("\n")
+    puts("Guess a letter ")
+    letterGuess = gets 
+    letterGuess = letterGuess.chomp
+    # Check if letter is a duplicate
+    if guessedLetters.length > 0
+        for i in 0..correctWord.length-1
+            if letterGuess == guessedLetters[i]
+                duplicate = true
+            end
         end
     end
-end
-
-# Check if letter is in word 
-for i in 0..correctWord.length-1
-    if letterGuess == correctWord[i]
-        numberOfLetters[i] = letterGuess
-        letterInWord = true
+    # If guess is duplicate, display error message
+    # Else, add letter to array
+    if duplicate == true
+        puts("Sorry that is a duplicate guess")
+    else 
+        guessedLetters.push(letterGuess)
     end
-end
 
-for i in 0..correctWord.length-1
-    print(numberOfLetters[i])
+    # If letter is word, save in correct spot of underscored word 
+    for i in 0..correctWord.length-1
+        if letterGuess == correctWord[i]
+            numberOfLetters[i] = letterGuess
+            letterInWord = true
+        end
+    end
+
+    # Display updated underscored word 
+    for i in 0..correctWord.length-1
+        print(numberOfLetters[i])
+    end
+
+    # If letter not in word, decrement number of guesses remaining and display message
+    # https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-ruby 
+    if letterInWord == false 
+        numberOfGuesses = numberOfGuesses - 1
+        puts("\n")
+        puts("Sorry that letter is not in the word, you have " + numberOfGuesses.to_s + " guesses left.")
+    end
+
+    # Check if user has any remaining guesses
+    if numberOfGuesses == 0
+        puts("Sorry, you lost the game. The correct word was " + correctWord + ".")
+        break
+    end
+    # Asks user if they would like to solve
+    puts("\n")
+    puts("Would you like to solve the word? (yes/no)")
+    solve = gets
+    solve = solve.chomp
+    # If user wants to solve, ask for guess
+    if solve ==  "yes"
+        puts("Please enter your guess: ")
+        userGuess = gets
+        userGuess = userGuess.chomp
+        # If user solves correctly, end game and show congratulations message
+        if userGuess == correctWord 
+            puts("Congratulations you won the game! The correct word was " + correctWord + ".")
+            wordGuessed = true  
+        # If user solves incorrectly, decrement number of guesses and show message 
+        else
+            numberOfGuesses = numberOfGuesses - 1
+            puts("Sorry, that is not the correct word. You have " + numberOfGuesses.to_s + " guesses left.")
+        end
+    end
+    # Reset variables to false for next iteration
+    duplicate = false
+    letterInWord = false
 end
-# Display updated filled in guessed
-# If letter not in word, draw next part of snowman 
-# Check to see if user has any guesses left
