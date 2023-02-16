@@ -1,17 +1,49 @@
 guessedLetters = []
+numberOfLetters = []
+letterInWord = false
 # Hard-coded words for game
 words = ["cat", "dog", "turtle", "elephant", "bird"]
 
-# Game randomly selects one of the words to use
+# Game randomly selects one of the words to use and print underscores 
 # https://www.educative.io/answers/what-is-arraysample-in-ruby
+# https://stackoverflow.com/questions/15982510/why-doesnt-puts-print-in-a-single-line 
 correctWord = words.sample
-
+puts(correctWord)
+for i in 0..correctWord.length-1
+    numberOfLetters.push("_ ")
+end
+for i in 0..correctWord.length-1
+    print(numberOfLetters[i])
+end
 # Asks for user input for their letter guess and add to array of already guessed letters
+# Remove newline after input: https://blog.udemy.com/ruby-chomp/ 
+puts("\n")
+puts("\n")
 puts("Guess a letter ")
 letterGuess = gets 
+letterGuess = letterGuess.chomp
 guessedLetters.push(letterGuess)
+
 # Check if letter is a duplicate
+if guessedLetters.length > 1
+    for i in 0..correctWord.length-1
+        if letterGuess == guessedLetters[i]
+            puts("Sorry that is a duplicate guess. Guess again.")
+        end
+    end
+end
+
 # Check if letter is in word 
+for i in 0..correctWord.length-1
+    if letterGuess == correctWord[i]
+        numberOfLetters[i] = letterGuess
+        letterInWord = true
+    end
+end
+
+for i in 0..correctWord.length-1
+    print(numberOfLetters[i])
+end
 # Display updated filled in guessed
 # If letter not in word, draw next part of snowman 
 # Check to see if user has any guesses left
