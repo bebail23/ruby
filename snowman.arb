@@ -30,6 +30,7 @@ while numberOfGuesses > 0 and wordGuessed == false
     puts("Guess a letter ")
     letterGuess = gets 
     letterGuess = letterGuess.chomp
+    letterGuess = letterGuess.downcase
     # Check if letter is a duplicate
     if guessedLetters.length > 0
         for i in 0..correctWord.length-1
