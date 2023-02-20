@@ -8,10 +8,7 @@ numberOfGuesses = 6;
 # Hard-coded words for game
 # words = ["cat", "dog", "turtle", "elephant", "bird", "ant", "lizard", "frog", "bear", "lion"]
 
-# Game randomly selects one of the words to use and print underscores 
-# https://www.educative.io/answers/what-is-arraysample-in-ruby
-# https://stackoverflow.com/questions/11007111/ruby-whats-an-elegant-way-to-pick-a-random-line-from-a-text-file 
-# https://stackoverflow.com/questions/15982510/why-doesnt-puts-print-in-a-single-line 
+# Game randomly selects one of the file words to use and print underscores 
 correctWord = File.readlines("wordList.txt").sample
 correctWord = correctWord.chomp
 puts(correctWord)
@@ -23,10 +20,8 @@ for i in 0..correctWord.length-1
 end
 
 # While user still has guesses left and user hasn't won, keep asking for guesses 
-# https://www.geeksforgeeks.org/ruby-loops-for-while-do-while-until/ 
 while numberOfGuesses > 0 and wordGuessed == false
     # Asks for user input for their letter guess and add to array of already guessed letters
-    # Remove newline after input: https://blog.udemy.com/ruby-chomp/ 
     puts("\n")
     puts("\n")
     if guessedLetters.length > 0
@@ -52,7 +47,7 @@ while numberOfGuesses > 0 and wordGuessed == false
         guessedLetters.push(letterGuess)
     end
 
-    # If letter is word, save in correct spot of underscored word 
+    # If letter in word, save in correct spot of underscored word 
     for i in 0..correctWord.length-1
         if letterGuess == correctWord[i]
             numberOfLetters[i] = letterGuess
@@ -66,7 +61,6 @@ while numberOfGuesses > 0 and wordGuessed == false
     end
 
     # If letter not in word, decrement number of guesses remaining and display message
-    # https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-ruby 
     if letterInWord == false and duplicate == false
         numberOfGuesses = numberOfGuesses - 1
         puts("\n")
@@ -80,7 +74,6 @@ while numberOfGuesses > 0 and wordGuessed == false
     end
 
     # Check to see if user solved through letter guesses
-    # https://stackoverflow.com/questions/1986386/how-to-check-if-a-value-exists-in-an-array-in-ruby 
     if (numberOfLetters.include? '_ ') == false
         puts("\n")
         puts("Congratulations you won the game! The correct word was " + correctWord + ".")
