@@ -67,7 +67,7 @@ while numberOfGuesses > 0 and wordGuessed == false
 
     # If letter not in word, decrement number of guesses remaining and display message
     # https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-ruby 
-    if letterInWord == false 
+    if letterInWord == false and duplicate == false
         numberOfGuesses = numberOfGuesses - 1
         puts("\n")
         puts("Sorry that letter is not in the word, you have " + numberOfGuesses.to_s + " guesses left.")
@@ -89,26 +89,27 @@ while numberOfGuesses > 0 and wordGuessed == false
     end
 
     # Asks user if they would like to solve
-    puts("\n")
-    puts("Would you like to solve the word? (y/n)")
-    solve = gets
-    solve = solve.chomp
-    # If user wants to solve, ask for guess
-    if solve ==  "y"
-        puts("Please enter your guess: ")
-        userGuess = gets
-        userGuess = userGuess.chomp
-        # If user solves correctly, end game and show congratulations message
-        if userGuess == correctWord 
-            puts("Congratulations you won the game! The correct word was " + correctWord + ".")
-            wordGuessed = true  
-        # If user solves incorrectly, decrement number of guesses and show message 
-        else
-            numberOfGuesses = numberOfGuesses - 1
-            puts("Sorry, that is not the correct word. You have " + numberOfGuesses.to_s + " guesses left.")
+    if duplicate == false
+        puts("\n")
+        puts("Would you like to solve the word? (y/n)")
+        solve = gets
+        solve = solve.chomp
+        # If user wants to solve, ask for guess
+        if solve ==  "y"
+            puts("Please enter your guess: ")
+            userGuess = gets
+            userGuess = userGuess.chomp
+            # If user solves correctly, end game and show congratulations message
+            if userGuess == correctWord 
+                puts("Congratulations you won the game! The correct word was " + correctWord + ".")
+                wordGuessed = true  
+            # If user solves incorrectly, decrement number of guesses and show message 
+            else
+                numberOfGuesses = numberOfGuesses - 1
+                puts("Sorry, that is not the correct word. You have " + numberOfGuesses.to_s + " guesses left.")
+            end
         end
     end
-
     # Reset variables to false for next iteration
     duplicate = false
     letterInWord = false
