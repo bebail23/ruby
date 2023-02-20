@@ -1,0 +1,10 @@
+cat
+dog
+bird
+frog
+turtle
+elephant
+ant
+lizard
+bear
+lion

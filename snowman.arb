@@ -6,12 +6,14 @@ letterInWord = false
 wordGuessed = false
 numberOfGuesses = 6;
 # Hard-coded words for game
-words = ["cat", "dog", "turtle", "elephant", "bird"]
+# words = ["cat", "dog", "turtle", "elephant", "bird", "ant", "lizard", "frog", "bear", "lion"]
 
 # Game randomly selects one of the words to use and print underscores 
 # https://www.educative.io/answers/what-is-arraysample-in-ruby
+# https://stackoverflow.com/questions/11007111/ruby-whats-an-elegant-way-to-pick-a-random-line-from-a-text-file 
 # https://stackoverflow.com/questions/15982510/why-doesnt-puts-print-in-a-single-line 
-correctWord = words.sample
+correctWord = File.readlines("wordList.txt").sample
+correctWord = correctWord.chomp
 puts(correctWord)
 for i in 0..correctWord.length-1
     numberOfLetters.push("_ ")
@@ -27,6 +29,9 @@ while numberOfGuesses > 0 and wordGuessed == false
     # Remove newline after input: https://blog.udemy.com/ruby-chomp/ 
     puts("\n")
     puts("\n")
+    if guessedLetters.length > 0
+        puts("Your previous letter guesses: " + guessedLetters.to_s)
+    end
     puts("Guess a letter ")
     letterGuess = gets 
     letterGuess = letterGuess.chomp
@@ -85,11 +90,11 @@ while numberOfGuesses > 0 and wordGuessed == false
 
     # Asks user if they would like to solve
     puts("\n")
-    puts("Would you like to solve the word? (yes/no)")
+    puts("Would you like to solve the word? (y/n)")
     solve = gets
     solve = solve.chomp
     # If user wants to solve, ask for guess
-    if solve ==  "yes"
+    if solve ==  "y"
         puts("Please enter your guess: ")
         userGuess = gets
         userGuess = userGuess.chomp
