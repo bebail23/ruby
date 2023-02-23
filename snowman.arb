@@ -9,9 +9,10 @@ numberOfGuesses = 6;
 # words = ["cat", "dog", "turtle", "elephant", "bird", "ant", "lizard", "frog", "bear", "lion"]
 
 # Game randomly selects one of the file words to use and print underscores 
-correctWord = File.readlines("wordList.txt").sample
+correctWord = File.readlines("dictionary.txt").sample
 correctWord = correctWord.chomp
 puts(correctWord)
+correctWord = correctWord.downcase
 for i in 0..correctWord.length-1
     numberOfLetters.push("_ ")
 end
@@ -32,7 +33,7 @@ while numberOfGuesses > 0 and wordGuessed == false
     letterGuess = gets 
     letterGuess = letterGuess.chomp
     letterGuess = letterGuess.downcase
-    if letterGuess.match(/[a-z]/) or letterGuess == "," or letterGuess == "-"
+    if letterGuess.match(/[a-z]/) or letterGuess == "," or letterGuess == "-" or letterGuess == "'"
         # Check if letter is a duplicate
         if guessedLetters.length > 0
             for i in 0..correctWord.length-1
