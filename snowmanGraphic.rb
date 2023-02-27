@@ -26,6 +26,7 @@ body = Circle.new(
     radius: SNOWMAN_RADIUS_1, 
     sectors: 32, 
     color: SNOWMAN_COLOR)
+
 head = Circle.new(
     x: WINDOW_WIDTH / 2, 
     y: WINDOW_HEIGHT - SNOWMAN_RADIUS_1 - SNOWMAN_RADIUS_2, 
@@ -65,6 +66,7 @@ button_2 = Circle.new(
     sectors: 32, 
     color: BUTTON_COLOR)
 
+
 # Variable declarations
 guessedLetters = []
 numberOfLetters = []
@@ -87,6 +89,7 @@ for i in 0..correctWord.length-1
     print(numberOfLetters[i])
 end
 
+ 
 # While user still has guesses left and user hasn't won, keep asking for guesses 
 while numberOfGuesses > 0 and wordGuessed == false
     # Asks for user input for their letter guess and add to array of already guessed letters
@@ -141,7 +144,6 @@ while numberOfGuesses > 0 and wordGuessed == false
             hat.add if numberOfGuesses <= 2
             button_1.add if numberOfGuesses <= 1
             button_2.add if numberOfGuesses <= 0
-            
         end
 
     # Check if user has any remaining guesses
