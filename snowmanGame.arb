@@ -89,7 +89,6 @@ def start_game
             if guessedLetters.length > 0
                 for i in 0..correctWord.length-1
                     if letterGuess == guessedLetters[i]
-                        puts(correctWord[i])
                         duplicate = true
                     end
                 end
