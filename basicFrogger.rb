@@ -84,21 +84,21 @@ update do
   # check for collisions with logs
   # need to make .collides_with? method
   on_log = false
-  logs.each do |log|
-    if frog.collides_with? log
-      on_log = true
-      frog.x += log.x_velocity
-    end
-  end
+  #logs.each do |log|
+    #if frog.collides_with? log
+      #on_log = true
+      #frog.x += log.x_velocity
+    #end
+  #end
 
   # check for collisions with cars
-  on_car = false
-  cars.each do |car|
-    if frog.collides_with? car
-      set title: "Game Over"
-      pause
-    end
-  end
+  #on_car = false
+  #cars.each do |car|
+    #if frog.collides_with? car
+      #set title: "Game Over"
+      #pause
+    #end
+  #end
 
   # check if frog has made it to the other side
   if frog.y < 100
