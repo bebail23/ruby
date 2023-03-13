@@ -6,7 +6,8 @@ def restart_game
     clear
     # Call the main function to start the game again
     start_game
-  end
+end
+
   
 
 def start_game
@@ -19,6 +20,7 @@ def start_game
     wordGuessed = false
     numberOfGuesses = 6
     correctWord = ""
+    gameOver = false
     # Title and welcome message
     set title: "Snowman", background: 'blue'
     Text.new("Welcome to Snowman")
@@ -34,12 +36,13 @@ def start_game
         numberOfGuesses.to_s,
         x: 200, y: 250
     )
-    puts("Before we clear: " + correctWord)
+    replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
+    Text.new('Replay', x: 310, y: 440, size: 20)
+
     correctWord.clear
     correctWord = File.readlines("dictionary.txt").sample
     correctWord = correctWord.chomp
     correctWord = correctWord.downcase
-    puts("After we clear: " + correctWord)
     for i in 0..correctWord.length-1
         numberOfLetters.push("_ ")
     end
@@ -99,7 +102,7 @@ def start_game
             # If guess is duplicate, display error message
             # Else, add letter to array
             if duplicate == true
-                puts("Sorry that is a duplicate guess")
+                
             else 
                 if letterGuess == "left shift"
 
@@ -179,41 +182,30 @@ def start_game
                     button3.y = 225
                     button3.radius = 10
                     button3.color = 'fuchsia'
-                    endingMessage.text = "Sorry, you lost the game. The correct word was " + correctWord + "."
-                    # Add a replay button
-                    replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
-                    Text.new('Replay', x: 310, y: 440, size: 20)
-                    on :mouse_up do |event|
-                        if event.x >= 300 and event.x <= 380 and event.y >= 440 and event.y <= 470
-                            correctWord.clear
-                            restart_game
-                        end
-                    end  
+                    endingMessage.text = "Sorry, you lost the game. The correct word was " + correctWord + "." 
                 end
             end
             # Check to see if user solved through letter guesses
             if (numberOfLetters.include? '_ ') == false
                 endingMessage.text = "Congratulations, you won!"
                 wordGuessed = true
-                # Add a replay button
-                replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
-                Text.new('Replay', x: 310, y: 440, size: 20)
-                on :mouse_up do |event|
-                    if event.x >= 300 and event.x <= 380 and event.y >= 440 and event.y <= 470
-                        correctWord.clear
-                        restart_game
-                        puts("Restart: " + correctWord)
-                    end
-                end 
+                correctWord.clear
             end
         else
             puts("Sorry that is not a valid guess.")
         end
     end
-
     #show
 end # end main function 
 
+
 # First game, start the game
+replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
+Text.new('Replay', x: 310, y: 440, size: 20)
+on :mouse_up do |event|
+    if event.x >= 300 and event.x <= 380 and event.y >= 440 and event.y <= 470
+        restart_game
+    end
+end 
 start_game
 show
