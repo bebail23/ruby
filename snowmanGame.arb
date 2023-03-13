@@ -1,20 +1,9 @@
 require 'ruby2d'
-# Variable declarations
-guessedLetters = []
-numberOfLetters = []
-wrongLetters = []
-duplicate = false
-letterInWord = false
-wordGuessed = false
-numberOfGuesses = 6
 
-
-
-
-
-# fucntion for restarting game upon pressing replay button after win or loss
+# function for restarting game upon pressing replay button after win or loss
 def restart_game
     # Clear all the graphical objects
+    clear
     # Call the main function to start the game again
     start_game
   end
@@ -51,18 +40,24 @@ def start_game
     file.close
     correctWord = correctWord.chomp
     correctWord = correctWord.downcase
+    puts(correctWord)
     for i in 0..correctWord.length-1
         numberOfLetters.push("_ ")
     end
+    underscores = Text.new(
+        " ",
+        x: 10, y: 50
+    )
     for i in 0...numberOfLetters.length
-        underscores = Text.new(
-        numberOfLetters[i],
-        x: 10 + i*20, y: 50 
-        )
+        underscores.text = numberOfLetters.join
     end
     letters = Text.new(
         " ",
         x: 10, y: 120
+    )
+    endingMessage = Text.new(
+        " ",
+        x: 10, y: 400
     )
     
     # Add a hint button
@@ -83,17 +78,12 @@ def start_game
         end
     end
 
-
-
-
-
     on :key_up do |event|
         # All keyboard interaction
         letterInWord = false
         duplicate = false
         letterGuess = event.key
         letterGuess = letterGuess.downcase
-        puts(correctWord.to_s)
         if letterGuess == "left shift"
             duplicate = true
         end
@@ -124,14 +114,10 @@ def start_game
                     letterInWord = true
                 end
             end
-            for i in 0...numberOfLetters.length
-                underscores = Text.new(
-                    numberOfLetters[i],
-                    x: 10 + i*20, y: 50 
-            )
-            end
+            underscores.text = numberOfLetters.join
             guessedLetters.sort!
             letters.text = guessedLetters.join(", ")
+            puts(letterInWord)
             if letterInWord == false and duplicate == false
                 numberOfGuesses = numberOfGuesses - 1
                 originalGuess.text = numberOfGuesses.to_s
@@ -194,17 +180,14 @@ def start_game
                     button3.y = 225
                     button3.radius = 10
                     button3.color = 'fuchsia'
-                    losingMessage = Text.new(
-                        "Sorry, you lost the game. The correct word was " + correctWord + ".",
-                        x: 10, y: 400
-                    )
+                    endingMessage.text = "Sorry, you lost the game. The correct word was " + correctWord + "."
                      # Add a replay button
                     replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
                     Text.new('Replay', x: 300, y: 440, size: 20)
                     # If replay button clicked, call restart game
                     on :mouse_up do |event|
                         if event.x >= 10 and event.x <= 90 and event.y >= 440 and event.y <= 470
-                            guessedLetters.clear()
+                            correctWord.clear
                             restart_game
                         end
                     end
@@ -212,10 +195,7 @@ def start_game
             end
             # Check to see if user solved through letter guesses
             if (numberOfLetters.include? '_ ') == false
-                winningMessage = Text.new(
-                    "Congratulations you won!",
-                    x: 0, y: 400
-                )
+                endingMessage.text = "Congratulations, you won!"
                 wordGuessed = true
                 # Add a replay button
                 replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
@@ -224,8 +204,6 @@ def start_game
                 on :mouse_up do |event|
                     if event.x >= 300 and event.x <= 380 and event.y >= 440 and event.y <= 470
                         correctWord.clear
-                        guessedLetters.clear()
-                        clear
                         restart_game
                     end
                 end
