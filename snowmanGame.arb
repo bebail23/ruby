@@ -1,14 +1,12 @@
 require 'ruby2d'
 
-# function for restarting game upon pressing replay button after win or loss
+# Function for restarting game upon pressing replay button after win or loss
 def restart_game
     # Clear all the graphical objects
     clear
     # Call the main function to start the game again
     start_game
 end
-
-  
 
 def start_game
     # Variable declarations
@@ -21,6 +19,7 @@ def start_game
     numberOfGuesses = 6
     correctWord = ""
     gameOver = false
+
     # Title and welcome message
     set title: "Snowman", background: 'blue'
     Text.new("Welcome to Snowman")
@@ -36,13 +35,18 @@ def start_game
         numberOfGuesses.to_s,
         x: 200, y: 250
     )
+
+    # Replay button
     replayButton = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
     Text.new('Replay', x: 310, y: 440, size: 20)
 
+    # Make sure correct word is cleared and pick new word
     correctWord.clear
     correctWord = File.readlines("dictionary.txt").sample
     correctWord = correctWord.chomp
     correctWord = correctWord.downcase
+
+    # Display underscores for number of letters in word
     for i in 0..correctWord.length-1
         numberOfLetters.push("_ ")
     end
@@ -53,6 +57,8 @@ def start_game
     for i in 0...numberOfLetters.length
         underscores.text = numberOfLetters.join
     end
+
+    # Set up texts for letter guesses and final message
     letters = Text.new(
         " ",
         x: 10, y: 120
@@ -63,7 +69,7 @@ def start_game
     )
     
 
-    # Add a hint button
+    # Hint button
     hintClicked = 0
     hintButton = Rectangle.new(x: 10, y: 440, width: 60, height: 30, color: 'fuchsia')
     Text.new('Hint', x: 20, y: 440, size: 20)
@@ -82,14 +88,17 @@ def start_game
     end
 
     on :key_up do |event|
-        # All keyboard interaction
+        # Reset variables 
         letterInWord = false
         duplicate = false
+        # Take in key press and set to lowercase 
         letterGuess = event.key
         letterGuess = letterGuess.downcase
+        # If certain other buttons pressed, ignore 
         if letterGuess == "left shift"
             duplicate = true
         end
+        # If letter guess is lowercase alphabet, dash, comma, or apostrophe allow
         if letterGuess.match(/[a-z]/) or letterGuess == "," or letterGuess == "-" or letterGuess == "'"
             # Check if letter is a duplicate
             if guessedLetters.length > 0
@@ -99,8 +108,7 @@ def start_game
                     end
                 end
             end
-            # If guess is duplicate, display error message
-            # Else, add letter to array
+            # If duplicate, don't do anything or add to list
             if duplicate == true
                 
             else 
@@ -120,6 +128,7 @@ def start_game
             underscores.text = numberOfLetters.join
             guessedLetters.sort!
             letters.text = guessedLetters.join(", ")
+            # If letter not in word and not a duplicate, decrease number of guesses left and draw next part of snowman
             if letterInWord == false and duplicate == false and not correctWord.empty?
                 numberOfGuesses = numberOfGuesses - 1
                 originalGuess.text = numberOfGuesses.to_s
@@ -192,7 +201,7 @@ def start_game
                 correctWord.clear
             end
         else
-            puts("Sorry that is not a valid guess.")
+            
         end
     end
     #show
