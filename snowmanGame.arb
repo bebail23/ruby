@@ -95,7 +95,7 @@ def start_game
         letterGuess = event.key
         letterGuess = letterGuess.downcase
         # If certain other buttons pressed, ignore 
-        if letterGuess == "left shift"
+        if letterGuess == "left shift" or letterGuess == "right shift" or letterGuess == "space" or letterGuess == "tab" or letterGuess == "backspace" or letterGuess == "return"
             duplicate = true
         end
         # If letter guess is lowercase alphabet, dash, comma, or apostrophe allow
@@ -112,7 +112,7 @@ def start_game
             if duplicate == true
                 
             else 
-                if letterGuess == "left shift"
+                if letterGuess == "left shift" or letterGuess == "right shift" or letterGuess == "space" or letterGuess == "tab" or letterGuess == "backspace" or letterGuess == "return"
 
                 else 
                     guessedLetters.push(letterGuess)
