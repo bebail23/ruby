@@ -67,6 +67,11 @@ def start_game
         " ",
         x: 10, y: 400
     )
+    duplicateMessage = Text.new(
+        " ",
+        x: 10, y: 300
+    )
+
     
 
     # Hint button
@@ -86,125 +91,126 @@ def start_game
             end
         end
     end
-
-    on :key_up do |event|
-        # Reset variables 
-        letterInWord = false
-        duplicate = false
-        # Take in key press and set to lowercase 
-        letterGuess = event.key
-        letterGuess = letterGuess.downcase
-        # If certain other buttons pressed, ignore 
-        if letterGuess == "left shift" or letterGuess == "right shift" or letterGuess == "capslock" or letterGuess == "space" or letterGuess == "tab" or letterGuess == "backspace" or letterGuess == "return"
-            duplicate = true
-        end
-        # If letter guess is lowercase alphabet, dash, comma, or apostrophe allow
-        if letterGuess.match(/[a-z]/) or letterGuess == "," or letterGuess == "-" or letterGuess == "'"
-            # Check if letter is a duplicate
-            if guessedLetters.length > 0
-                for i in 0..correctWord.length-1
-                    if letterGuess == guessedLetters[i]
-                        duplicate = true
-                    end
-                end
-            end
-            # If duplicate, don't do anything or add to list
-            if duplicate == true
-                
-            else 
+        on :key_up do |event|
+            # Reset variables 
+            letterInWord = false
+            duplicate = false
+            duplicateMessage.text = " "
+            # Take in key press and set to lowercase
+            if numberOfGuesses > 0 and wordGuessed == false
+                letterGuess = event.key
+                letterGuess = letterGuess.downcase
+                # If certain other buttons pressed, ignore 
                 if letterGuess == "left shift" or letterGuess == "right shift" or letterGuess == "capslock" or letterGuess == "space" or letterGuess == "tab" or letterGuess == "backspace" or letterGuess == "return"
+                    duplicate = true
+                end
+                # If letter guess is lowercase alphabet, dash, comma, or apostrophe allow
+                if letterGuess.match(/[a-z]/) or letterGuess == "," or letterGuess == "-" or letterGuess == "'"
+                    # Check if letter is a duplicate
+                    if guessedLetters.length > 0
+                        for i in 0..correctWord.length-1
+                            if letterGuess == guessedLetters[i]
+                                duplicate = true
+                                duplicateMessage.text = "Sorry, that is a duplicate guess."
+                            end
+                        end
+                    end
+                    # If duplicate, don't do anything or add to list
+                    if duplicate == true
+                        
+                    else 
+                        if letterGuess == "left shift" or letterGuess == "right shift" or letterGuess == "capslock" or letterGuess == "space" or letterGuess == "tab" or letterGuess == "backspace" or letterGuess == "return"
 
-                else 
-                    guessedLetters.push(letterGuess)
-                end
-            end
-            # If letter in word, save in correct spot of underscored word 
-            for i in 0..correctWord.length-1
-                if letterGuess == correctWord[i]
-                    numberOfLetters[i] = letterGuess
-                    letterInWord = true
-                end
-            end
-            underscores.text = numberOfLetters.join
-            guessedLetters.sort!
-            letters.text = guessedLetters.join(", ")
-            # If letter not in word and not a duplicate, decrease number of guesses left and draw next part of snowman
-            if letterInWord == false and duplicate == false and not correctWord.empty?
-                numberOfGuesses = numberOfGuesses - 1
-                originalGuess.text = numberOfGuesses.to_s
-                if numberOfGuesses == 5
-                    head = Circle.new
-                    head.x = 500
-                    head.y = 120
-                    head.radius = 50
-                    head.color = 'white'
-                end
-                if numberOfGuesses == 4
-                    torso = Circle.new
-                    torso.x = 500
-                    torso.y = 200
-                    torso.radius = 70
-                    torso.color = 'white'
-                end
-                if numberOfGuesses == 3
-                    bottom = Circle.new
-                    bottom.x = 500
-                    bottom.y = 300
-                    bottom.radius = 90
-                    bottom.color = 'white'
-                end
-                if numberOfGuesses == 2
-                    eye1 = Circle.new
-                    eye1.x = 480
-                    eye1.y = 105
-                    eye1.radius = 5
-                    eye1.color = 'black'
-                    eye2 = Circle.new
-                    eye2.x = 515
-                    eye2.y = 105
-                    eye2.radius = 5
-                    eye2.color = 'black'
-                end
-                if numberOfGuesses == 1
-                    nose = Triangle.new
-                    nose.x1 = 490
-                    nose.y1 = 115
-                    nose.x2 = 490
-                    nose.y2 = 135
-                    nose.x3 = 530
-                    nose.y3 = 125
-                    nose.color = 'orange'
-                end
-                if numberOfGuesses == 0
-                    button1 = Circle.new
-                    button1.x = 500
-                    button1.y = 165
-                    button1.radius = 10
-                    button1.color = 'fuchsia'
-                    button2 = Circle.new
-                    button2.x = 500
-                    button2.y = 195
-                    button2.radius = 10
-                    button2.color = 'fuchsia'
-                    button3 = Circle.new
-                    button3.x = 500
-                    button3.y = 225
-                    button3.radius = 10
-                    button3.color = 'fuchsia'
-                    endingMessage.text = "Sorry, you lost the game. The correct word was " + correctWord + "." 
-                end
-            end
-            # Check to see if user solved through letter guesses
-            if (numberOfLetters.include? '_ ') == false
-                endingMessage.text = "Congratulations, you won!"
-                wordGuessed = true
-                correctWord.clear
-            end
-        else
-            
-        end
+                        else 
+                            guessedLetters.push(letterGuess)
+                        end
+                    end
+                    # If letter in word, save in correct spot of underscored word 
+                    for i in 0..correctWord.length-1
+                        if letterGuess == correctWord[i]
+                            numberOfLetters[i] = letterGuess
+                            letterInWord = true
+                        end
+                    end
+                    underscores.text = numberOfLetters.join
+                    guessedLetters.sort!
+                    letters.text = guessedLetters.join(", ")
+                    # If letter not in word and not a duplicate, decrease number of guesses left and draw next part of snowman
+                    if letterInWord == false and duplicate == false and not correctWord.empty?
+                        numberOfGuesses = numberOfGuesses - 1
+                        originalGuess.text = numberOfGuesses.to_s
+                        if numberOfGuesses == 5
+                            head = Circle.new
+                            head.x = 500
+                            head.y = 120
+                            head.radius = 50
+                            head.color = 'white'
+                        end
+                        if numberOfGuesses == 4
+                            torso = Circle.new
+                            torso.x = 500
+                            torso.y = 200
+                            torso.radius = 70
+                            torso.color = 'white'
+                        end
+                        if numberOfGuesses == 3
+                            bottom = Circle.new
+                            bottom.x = 500
+                            bottom.y = 300
+                            bottom.radius = 90
+                            bottom.color = 'white'
+                        end
+                        if numberOfGuesses == 2
+                            eye1 = Circle.new
+                            eye1.x = 480
+                            eye1.y = 105
+                            eye1.radius = 5
+                            eye1.color = 'black'
+                            eye2 = Circle.new
+                            eye2.x = 515
+                            eye2.y = 105
+                            eye2.radius = 5
+                            eye2.color = 'black'
+                        end
+                        if numberOfGuesses == 1
+                            nose = Triangle.new
+                            nose.x1 = 490
+                            nose.y1 = 115
+                            nose.x2 = 490
+                            nose.y2 = 135
+                            nose.x3 = 530
+                            nose.y3 = 125
+                            nose.color = 'orange'
+                        end
+                        if numberOfGuesses == 0
+                            button1 = Circle.new
+                            button1.x = 500
+                            button1.y = 165
+                            button1.radius = 10
+                            button1.color = 'fuchsia'
+                            button2 = Circle.new
+                            button2.x = 500
+                            button2.y = 195
+                            button2.radius = 10
+                            button2.color = 'fuchsia'
+                            button3 = Circle.new
+                            button3.x = 500
+                            button3.y = 225
+                            button3.radius = 10
+                            button3.color = 'fuchsia'
+                            endingMessage.text = "Sorry, you lost the game. The correct word was " + correctWord + "." 
+                        end
+                    end
+                    # Check to see if user solved through letter guesses
+                    if (numberOfLetters.include? '_ ') == false
+                        endingMessage.text = "Congratulations, you won!"
+                        wordGuessed = true
+                        correctWord.clear
+                    end
+                else
+                end 
+            end 
     end
-    #show
 end # end main function 
 
 

@@ -92,7 +92,7 @@ update do
   #end
 
   # check for collisions with cars
-  #on_car = false
+  on_car = false
   #cars.each do |car|
     #if frog.collides_with? car
       #set title: "Game Over"
