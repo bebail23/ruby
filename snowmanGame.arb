@@ -89,7 +89,6 @@ def start_game
 
     on :key_up do |event|
         # Reset variables 
-        puts(guessedLetters.to_s)
         letterInWord = false
         duplicate = false
         # Take in key press and set to lowercase 
