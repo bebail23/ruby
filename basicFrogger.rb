@@ -7,8 +7,39 @@ set height: 480
 set background: 'blue'
 
 #Create a hash table for usernames as the key and scores as the value 
+class HashTable
+  def initialize
+    @table = Array.new(5000, nil)
+  end
+
+  def calculate_hash_value string
+    value = string[0].ord * 100 + string[1].ord
+    value
+  end
+
+  def store string
+    hash_value = calculate_hash_value(string)
+    if @table[hash_value] != nil
+      @table[hash_value].append(string)
+    else  
+      @table[hash_value] = [string]
+    end
+  end
+
+  def lookup string
+    hash_value = calculate_hash_value(string)
+    if @table[hash_value] != nil
+      if @table[hash_value].include?(string)
+        return hash_value
+      end
+    end
+    "String not found"
+  end
+end
 # We can use a timer to calculate scores 
 
+usernames = HashTable.new
+usernames.calculate_hash_value("Brooke")
 # create frog sprite
 # Png used from pngWing
 frog = Sprite.new(
