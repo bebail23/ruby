@@ -24,6 +24,16 @@ BEGIN{
       "Past Players",
       x: 70, y: 200, z: 20, color: "black", size: 20
     )
+    $playButton = Rectangle.new(
+      x: 470, y: 280, 
+      width: 100, height: 50,
+      color: "green",
+      z: 20
+    )
+    $playText = Text.new(
+      "Play",
+      x: 500, y: 290, z: 20, color: "white", size: 22
+    )
     $retryButton = Rectangle.new(
       x: 470, y: 280, 
       width: 100, height: 50,
@@ -126,6 +136,8 @@ BEGIN{
           $user = userLetters.join.chomp("return")
           if contains_number($user) and not contains_upper($user) and not contains_space($user) and $user.length > 6
             valid = true 
+            $retryButton.remove
+            $retryText.remove
             found = false
             oldScore = "0";
             $userHash.each do|name, score|
@@ -143,16 +155,6 @@ BEGIN{
                   File.write("usernames.txt", "\n" + $user + " " + $userHash[$user].to_s, mode: "a")
               end
             end
-            $playButton = Rectangle.new(
-              x: 470, y: 280, 
-              width: 100, height: 50,
-              color: "green",
-              z: 20
-            )
-            $playText = Text.new(
-              "Play",
-              x: 500, y: 290, z: 20, color: "white", size: 22
-            )
             on :mouse_down do |event|
               if event.x >= 470 and event.x <= 570 and event.y >= 280 and event.y <= 330
                 $userBox.remove
@@ -335,9 +337,9 @@ waterDeath = Sound.new('splash.mp3')
 # Sets initial log direction so they can bounce off screen
 logDirection = :right
 
-logBlock{
+#logBlock{
 
-}
+#}
 
 # start game loop
 game_over = false
