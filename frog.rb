@@ -171,6 +171,9 @@ BEGIN{
                 $enterText.remove
                 $p1UserText.remove
                 $backgroundBox.remove
+                # Calculate time for hash table 
+                $timeStart = Time.now
+                puts "Current time:" + $timeStart.inspect
               end
           end
           else 
@@ -334,9 +337,7 @@ impact = Sound.new('impact.ogg')
 logDirection = :right
 nextDirection = :right
 
-# Calculate time for hash table 
-timeStart = Time.now
-puts "Current time:" + timeStart.inspect
+
 
 # start game loop
 game_over = false
@@ -486,7 +487,7 @@ end
 # Update hash table with score here
 END{
     puts"outside loop" 
-    elapsed_time = Time.now - timeStart
+    elapsed_time = Time.now - $timeStart
     puts "Elapsed time: #{elapsed_time} seconds"
     $userHash[$user] = elapsed_time
     file = File.open("usernames.txt")
