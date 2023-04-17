@@ -215,14 +215,14 @@ BEGIN{
         x: 0,
         y: 100,
         width: 150,
-        height: 75
+        height: 60
     )
     nextLog = Sprite.new(
         'log.png',
         x: 300,
-        y: 65,
+        y: 60,
         width: 150,
-        height: 75
+        height: 60
     )
 
     # create movable frog sprite
@@ -244,9 +244,7 @@ BEGIN{
     cars << Sprite.new(
         'car.png',
         x: i * 150 + 50,
-        #y: (500 - (rand(get(:width)))),
         y: 360 + rand(-35..35),
-        #y: rand(min_y..max_y),
         width: 75,
         height: 50
     )
@@ -282,9 +280,6 @@ BEGIN{
     )
     end
 
-# Calculate time for hash table 
-timeStart = Time.new
-puts "Current time:" + timeStart.inspect
 
 # handle movement
 on :key_down do |event|
@@ -312,7 +307,7 @@ on :key_down do |event|
     end
 end
   
-  
+# Collision detection function 
 def collides_with?(sprite1, sprite2)
     left1 = sprite1.x
     right1 = sprite1.x + sprite1.width
@@ -333,13 +328,15 @@ end
 
 # Sound effects!
 waterDeath = Sound.new('splash.mp3')
+impact = Sound.new('impact.ogg')
 
 # Sets initial log direction so they can bounce off screen
 logDirection = :right
+nextDirection = :right
 
-#logBlock{
-
-#}
+# Calculate time for hash table 
+timeStart = Time.now
+puts "Current time:" + timeStart.inspect
 
 # start game loop
 game_over = false
@@ -356,6 +353,20 @@ update do
         # If the log sprite goes off the left side of the screen, change direction to right
         if theLog.x < 0
             logDirection = :right
+        end
+    end
+
+    if nextDirection == :right
+        nextLog.x += 3
+        # If the log sprite goes off the right side of the screen, change direction to left
+        if nextLog.x + nextLog.width > Window.width
+            nextDirection = :left
+        end
+    else
+        nextLog.x -= 3
+        # If the log sprite goes off the left side of the screen, change direction to right
+        if nextLog.x < 0
+            nextDirection = :right
         end
     end
 
@@ -392,17 +403,26 @@ update do
     # Collision checking
     game_over = false
     on_log = false
+    on_nextLog = false
 
     # Did the frog land on the log, if it did move the same as the log
     if collides_with?(frog,theLog)
         on_log = true
+        frog.y = theLog.y
         frog.x += ((theLog.x+50) - frog.x)
     end
 
-     # Did the frog land in the river without being on the log, if it did back to start
+    # Did the frog land on the log, if it did move the same as the log
+    if collides_with?(frog,nextLog)
+        on_nextLog = true
+        frog.y = nextLog.y
+        frog.x += ((nextLog.x+50) - frog.x)
+    end
+
+    # Did the frog land in the river without being on the log, if it did back to start
     if collides_with?(frog,riverLog)
         puts "landed in river"
-        if !on_log
+        if !on_log && !on_nextLog
             waterDeath.play
             frog.y = 550
             frog.x = 300
@@ -414,6 +434,7 @@ update do
     cars.each do |car|
         if collides_with?(frog,car)
             puts "inside collision with car"
+            impact.play
             frog.y = 550
             frog.x = 300
             game_over = true
@@ -424,6 +445,7 @@ update do
     cars_two.each do |car|
         if collides_with?(frog,car)
             puts "inside collision with car"
+            impact.play
             frog.y = 550
             frog.x = 300
             game_over = true
@@ -440,7 +462,6 @@ update do
         end
     end
 
-
     # Check if a collision occured and 
     if game_over == true 
         #loser = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
@@ -448,15 +469,30 @@ update do
         puts "gameOver"
     end
 
-  # check if frog has made it to the other side
-  if frog.y < 100
-    set title: "You Win!"
-    #pause
+  # check if frog has made it to the other side, reset level to second stage
+  if frog.y < 30
+    #frog.z = 4
+    # Starting grass patch for frog
+    #newScreen = Rectangle.new(x: 0, y: 0, z: 2, width: Window.width, height: Window.height, color: 'red')
+    exit
+
   end
 
 
 end
+
+
+# End block will run after program finishes 
+# Update hash table with score here
+END{
+    puts"outside loop" 
+    elapsed_time = Time.now - timeStart
+    puts "Elapsed time: #{elapsed_time} seconds"
+}
+
+
 # end of update loop
 
 # show window
 show
+
