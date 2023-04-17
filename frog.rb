@@ -148,12 +148,12 @@ BEGIN{
             end
             if !found
               $userHash[$user] = 0;
-              if($fileSize == 0)
-                  File.write("usernames.txt", $user + " " + $userHash[$user].to_s, mode: "a")
-              end
-              if($fileSize > 0)
-                  File.write("usernames.txt", "\n" + $user + " " + $userHash[$user].to_s, mode: "a")
-              end
+              #if($fileSize == 0)
+              #    File.write("usernames.txt", $user + " " + $userHash[$user].to_s, mode: "a")
+              #end
+              #if($fileSize > 0)
+                 # File.write("usernames.txt", "\n" + $user + " " + $userHash[$user].to_s, mode: "a")
+             # end
             end
             on :mouse_down do |event|
               if event.x >= 470 and event.x <= 570 and event.y >= 280 and event.y <= 330
@@ -488,6 +488,12 @@ END{
     puts"outside loop" 
     elapsed_time = Time.now - timeStart
     puts "Elapsed time: #{elapsed_time} seconds"
+    $userHash[$user] = elapsed_time
+    file = File.open("usernames.txt")
+    File.write("usernames.txt", "", mode: "w")
+    $userHash.each do|name, score|
+        File.write("usernames.txt", name + " " + score.to_s + "\n", mode: "a")
+    end
 }
 
 

@@ -1,6 +1,3 @@
-brooke1 0
-brooke2 0
-br00ke9 0
-b123489 0
-brooke4 0
-brooke3 0
+brooke2 11.26493
+brooke8 16.535384
+brooke5 16.628553
