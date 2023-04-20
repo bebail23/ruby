@@ -1,3 +1,4 @@
-brooke2 12.547198
-brooke8 16.535384
-brooke5 16.628553
+brooke3 12.26551
+brooke2 17.589975
+brooke1 10.820891
+brooke4 13.772994

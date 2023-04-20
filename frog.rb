@@ -148,12 +148,6 @@ BEGIN{
             end
             if !found
               $userHash[$user] = 0;
-              #if($fileSize == 0)
-              #    File.write("usernames.txt", $user + " " + $userHash[$user].to_s, mode: "a")
-              #end
-              #if($fileSize > 0)
-                 # File.write("usernames.txt", "\n" + $user + " " + $userHash[$user].to_s, mode: "a")
-             # end
             end
             on :mouse_down do |event|
               if event.x >= 470 and event.x <= 570 and event.y >= 280 and event.y <= 330
@@ -469,15 +463,40 @@ update do
         #Text.new('You lost!', x: 310, y: 440, size: 20)
         puts "gameOver"
     end
-
-  # check if frog has made it to the other side, reset level to second stage
-  if frog.y < 30
-    #frog.z = 4
-    # Starting grass patch for frog
-    #newScreen = Rectangle.new(x: 0, y: 0, z: 2, width: Window.width, height: Window.height, color: 'red')
-    exit
-
-  end
+    # check if frog has made it to the other side, reset level to second stage
+    if frog.y < 30 
+      elapsed_time = Time.now - $timeStart
+      puts "Elapsed time: #{elapsed_time} seconds"
+      $userHash[$user] = elapsed_time
+      file = File.open("usernames.txt")
+      File.write("usernames.txt", "", mode: "w")
+      $userHash.each do|name, score|
+          File.write("usernames.txt", name + " " + score.to_s + "\n", mode: "a")
+      end
+      leaderboardUserArray = []
+      leaderboardScoreArray = []
+      leaderCount = 0
+      $userHash.each do|name, score|
+        leaderboardUserArray[leaderCount] = name
+        leaderboardScoreArray[leaderCount] = score.to_s
+        leaderCount = leaderCount + 1
+      end
+      leaderboardBox = Rectangle.new(
+        x: 0, y: 0,
+        width: 640, height: 600,
+        color: "blue",
+        z: 20
+      )
+      leaderboardTextJoin = leaderboardUserArray.join("   ")
+      leaderboardText = Text.new(
+        leaderboardTextJoin,
+        x: 10, y: 290, z: 20, color: "white", size: 22
+      )
+      #frog.z = 4
+      # Starting grass patch for frog
+      #newScreen = Rectangle.new(x: 0, y: 0, z: 2, width: Window.width, height: Window.height, color: 'red')
+      #exit
+    end
 
 
 end
@@ -487,14 +506,7 @@ end
 # Update hash table with score here
 END{
     puts"outside loop" 
-    elapsed_time = Time.now - $timeStart
-    puts "Elapsed time: #{elapsed_time} seconds"
-    $userHash[$user] = elapsed_time
-    file = File.open("usernames.txt")
-    File.write("usernames.txt", "", mode: "w")
-    $userHash.each do|name, score|
-        File.write("usernames.txt", name + " " + score.to_s + "\n", mode: "a")
-    end
+
 }
 
 
