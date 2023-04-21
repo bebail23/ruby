@@ -326,6 +326,7 @@ end
 # Sound effects!
 waterDeath = Sound.new('splash.mp3')
 impact = Sound.new('impact.ogg')
+win = Sound.new('win.wav')
 
 # Sets initial log direction so they can bounce off screen
 logDirection = :right
@@ -335,6 +336,7 @@ nextDirection = :right
 
 # start game loop
 game_over = false
+leaderboardCheck = false
 update do
 
     if logDirection == :right
@@ -464,10 +466,13 @@ update do
         puts "gameOver"
     end
     # check if frog has made it to the other side, reset level to second stage
-    if frog.y < 30 
+    if frog.y < 30 and not leaderboardCheck
+      win.play
+      leaderboardCheck = true
       elapsed_time = Time.now - $timeStart
       puts "Elapsed time: #{elapsed_time} seconds"
       $userHash[$user] = elapsed_time
+      $userHash = $userHash.sort_by{|_name, score| score.to_i}
       file = File.open("usernames.txt")
       File.write("usernames.txt", "", mode: "w")
       $userHash.each do|name, score|
@@ -487,28 +492,33 @@ update do
         color: "blue",
         z: 20
       )
-      leaderboardTextJoin = leaderboardUserArray.join("   ")
-      leaderboardText = Text.new(
-        leaderboardTextJoin,
-        x: 10, y: 290, z: 20, color: "white", size: 22
+      leaderboardTitle = Text.new(
+        "Leaderboard",
+        x: 200, y: 50, z: 20, color: "white", size: 32
       )
-      #frog.z = 4
-      # Starting grass patch for frog
-      #newScreen = Rectangle.new(x: 0, y: 0, z: 2, width: Window.width, height: Window.height, color: 'red')
-      #exit
+      firstPlace = $userHash[0].join("   ")
+      leaderboardFirst = Text.new(
+        firstPlace,
+        x: 200, y: 150, z: 20, color: "white", size: 22
+      )
+      secondPlace = $userHash[1].join("   ")
+      leaderboardSecond = Text.new(
+        secondPlace,
+        x: 200, y: 200, z: 20, color: "white", size: 22
+      )
+      thirdPlace = $userHash[2].join("   ")
+      leaderboardThird = Text.new(
+        thirdPlace,
+        x: 200, y: 250, z: 20, color: "white", size: 22
+      )
+      yourScoreText = Text.new(
+        "Your score: " + elapsed_time.to_s,
+        x: 200, y: 500, z: 20, color: "white", size: 22
+      )
     end
 
 
 end
-
-
-# End block will run after program finishes 
-# Update hash table with score here
-END{
-    puts"outside loop" 
-
-}
-
 
 # end of update loop
 
