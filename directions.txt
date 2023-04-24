@@ -40,7 +40,7 @@ For frogger the following files are needed for frog.rb
     Start typing to fullfill the requirements and hit the enter/return key when ready
     This will pop up a green play buttonm that you will click with your mouse to begin the game
     Press the up, side, or down arrow keys to move the frog across the screen
- For snowman.rb:
+ For snowmanGame.arb:
   Only need dictionary.txt (The one you provided)
  To run snowmanGame.arb:
     In the terminal type: ruby snowmanGame.arb
