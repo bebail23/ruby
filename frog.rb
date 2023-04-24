@@ -1,3 +1,11 @@
+# Jessica Mott and Brooke Bailey 
+# Original Program: frog.rb
+# April 24 2023
+# This is a game made with Ruby2D that requires the player to move a frog from the bottom of the screen to the top as quickly as possible. 
+# However, there are different types of obstacles to traverse in order to make this possible. Time will run until the frog 
+# reaches the top of the screen, so the player must win in order for the game to finish. 
+# The time will be compared to a leaderboard of previous players with the three lowest times. 
+
 require 'ruby2d'
 
 BEGIN{
@@ -232,11 +240,10 @@ BEGIN{
     height: 40
     )
 
-    # create cars
+    # create 4 cars
+    # Cars will be placed at random y positions within 35 pixels of one another
     # png used from pngWing
     cars = []
-    #min_y = 25
-    #max_y = 500
     4.times do |i|
     cars << Sprite.new(
         'car.png',
@@ -247,24 +254,22 @@ BEGIN{
     )
     end
 
-    # create cars
+    # create 5 cars
+    # Cars will be placed at random y positions within 20 pixels of one another
     # png used from pngWing
+
     cars_two = []
-    #min_y = 25
-    #max_y = 500
     5.times do |i|
     cars_two << Sprite.new(
         'cartwo.png',
         x: i * 150 + 50,
-        #y: (500 - (rand(get(:width)))),
         y: 200 + rand(-20..20),
-        #y: rand(min_y..max_y),
         width: 75,
         height: 50
     )
     end
 
-    # create crocs
+    # create 4 crocs
     # From pngWing
     crocs = []
     4.times do |i|
@@ -278,7 +283,7 @@ BEGIN{
     end
 
 
-# handle movement
+# handle movement using threading to allow diagonal movement 
 on :key_down do |event|
     case event.key
     when 'left'
@@ -327,18 +332,21 @@ end
 waterDeath = Sound.new('splash.mp3')
 impact = Sound.new('impact.ogg')
 win = Sound.new('win.wav')
+chompFrog = Sound.new('chomp.mp3')
+
+backgroundSong = Music.new('Space-jazz.mp3')
+backgroundSong.play
 
 # Sets initial log direction so they can bounce off screen
 logDirection = :right
 nextDirection = :right
 
-
-
-# start game loop
-game_over = false
+# Start game loop, will loop until window is closed
+# Boolean to make sure the leaderboard is only updated once inside of infinite update loop
 leaderboardCheck = false
 update do
 
+    # Move the log across the screen
     if logDirection == :right
         theLog.x += 2
         # If the log sprite goes off the right side of the screen, change direction to left
@@ -353,6 +361,7 @@ update do
         end
     end
 
+    # Move second log across the screen
     if nextDirection == :right
         nextLog.x += 3
         # If the log sprite goes off the right side of the screen, change direction to left
@@ -367,6 +376,10 @@ update do
         end
     end
 
+    # Uses ternary operator, :? , as a way to write if/else on a single line
+    # Even index will move -2 to the left and Odd will move -3 to the right
+    # This makes the cars move at different speeds
+    # https://www.rubyguides.com/2019/10/ruby-ternary-operator/
     # move cars
     cars.each_with_index do |car, i|
         car.x += i.even? ? -2 : 3
@@ -377,7 +390,7 @@ update do
         end
     end
 
-    # move cars
+    # move second set of cars
     cars_two.each_with_index do |car, i|
         car.x += i.even? ? -2 : 2
         if car.x < -car.width
@@ -398,7 +411,6 @@ update do
     end
 
     # Collision checking
-    game_over = false
     on_log = false
     on_nextLog = false
 
@@ -418,54 +430,41 @@ update do
 
     # Did the frog land in the river without being on the log, if it did back to start
     if collides_with?(frog,riverLog)
-        puts "landed in river"
         if !on_log && !on_nextLog
             waterDeath.play
             frog.y = 550
             frog.x = 300
-            game_over = true
         end
     end
 
     # check for collisions with cars
     cars.each do |car|
         if collides_with?(frog,car)
-            puts "inside collision with car"
             impact.play
             frog.y = 550
             frog.x = 300
-            game_over = true
         end
     end
 
-    # check for collisions with cars
+    # check for collisions with second set of cars
     cars_two.each do |car|
         if collides_with?(frog,car)
-            puts "inside collision with car"
             impact.play
             frog.y = 550
             frog.x = 300
-            game_over = true
         end
     end
 
-    # check for collisions with cars
+    # check for collisions with crocs
     crocs.each do |croc|
         if collides_with?(frog,croc)
-            puts "inside collision with croc"
+            chompFrog.play
             frog.y = 550
             frog.x = 300
-            game_over = true
         end
     end
 
-    # Check if a collision occured and 
-    if game_over == true 
-        #loser = Rectangle.new(x: 300, y: 440, width: 80, height: 30, color: 'green')
-        #Text.new('You lost!', x: 310, y: 440, size: 20)
-        puts "gameOver"
-    end
-    # check if frog has made it to the other side, reset level to second stage
+    # check if frog has made it to the other side, update leaderboard and calculate time
     if frog.y < 30 and not leaderboardCheck
       win.play
       leaderboardCheck = true
@@ -519,7 +518,6 @@ update do
 
 
 end
-
 # end of update loop
 
 # show window
