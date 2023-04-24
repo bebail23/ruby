@@ -142,7 +142,7 @@ BEGIN{
         end 
         if finalLetter
           $user = userLetters.join.chomp("return")
-          if contains_number($user) and not contains_upper($user) and not contains_space($user) and $user.length > 6
+          if contains_number($user) and not contains_upper($user) and not contains_space($user) and $user.length >= 6
             valid = true 
             $retryButton.remove
             $retryText.remove
