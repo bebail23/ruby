@@ -20,7 +20,7 @@ On Mac-
     gem install ruby2d
   
 
-Directions for executing the programs- You will need 12 total extra files in the same folder to run both snowman.rb and frogger.rb
+Directions for executing the programs- You will need 12 total extra files in the same folder to run both snowmanGame.arb and frogger.rb
 All files will be provided except dictionary.txt because it is the same one you provided
 For frogger the following files are needed for frog.rb 
   car.png
@@ -42,8 +42,8 @@ For frogger the following files are needed for frog.rb
     Press the up, side, or down arrow keys to move the frog across the screen
  For snowman.rb:
   Only need dictionary.txt (The one you provided)
- To run snowman.rb:
-    In the terminal type: ruby snowman.rb
+ To run snowmanGame.arb:
+    In the terminal type: ruby snowmanGame.arb
     A window will pop up where you can begin playing 
     Interact with keys and mouse clicks
   
