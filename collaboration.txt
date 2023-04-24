@@ -1,5 +1,42 @@
 Collaboration - Sources 
 
+Snowman -
+
+Reading in Files 
+  Castello, J. (2019, June 22). How to Read &amp; Write Files in Ruby (With Examples). RubyGuides.
+  https://www.rubyguides.com/2015/05/working-with-files-ruby/. Accessed 2023 March 6.
+ 
+Sorting Arrays 
+  Castello, J. (2020, July 13). How to sort arrays & hashes in ruby (examples included). RubyGuides.      
+  https://www.rubyguides.com/2017/07/ruby-sort/. Accessed 2023 March 14.
+
+Regular Expression Matching
+  Castello, J. (2022, December 24). Mastering Ruby Regular Expressions. RubyGuides. 
+  https://www.rubyguides.com/2015/06/ruby-regex/. Accessed 2023 March 12.
+
+Removing New Line from End of User Input 
+  Editor, U. (2014, April 9). Ruby chomp: The easiest way to remove unwanted new lines. Udemy Blog. 
+  https://blog.udemy.com/ruby-chomp/. Accessed 2023 March 3. 
+
+Loops
+  GeeksforGeeks. (2021, July 5). Ruby: Loops (for, while, do..while, until). GeeksforGeeks. 
+  https://www.geeksforgeeks.org/ruby-loops-for-while-do-while-until/. Accessed 2023 March 2.  
+
+Convert Data Types 
+  Hogan, B. (2017, October 6). How to Convert Data Types in Ruby. DigitalOcean. 
+  https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-ruby. Accessed 2023 March 8. 
+  
+Finding Element in Array
+  Include? API Dock. (n.d.). https://apidock.com/ruby/Array/include%3F. Accessed 2023 March 3. 
+  
+Pick Random Line from File 
+  What is array.sample() in Ruby? Educative. (n.d.).
+  https://www.educative.io/answers/what-is-arraysample-in-ruby. Accessed 2023 March 2.
+
+Graphics
+  Ruby 2D - Section "Learn". (n.d.). https://www.ruby2d.com/. Accessed 2023 March 2.
+ 
+
 Frogger - 
 
 Ternary Operator 
