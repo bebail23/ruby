@@ -1,0 +1,34 @@
+Collaboration - Sources 
+
+Frogger - 
+
+Ternary Operator 
+  How to use the ruby ternary operator (?:). RubyGuides. (2019, October 3). 
+  https://www.rubyguides.com/2019/10/ruby-ternary-operator/. Accessed 2023 April 18.
+
+Threading 
+  How to use Ruby Threads. RubyGuides. (2020, January 31). 
+  https://www.rubyguides.com/2015/07/ruby-threads/. Accessed 2023 April 20.
+
+  Threading. Class: Thread (Ruby 2.5.0). (n.d.). 
+  https://ruby-doc.org/core-2.5.0/Thread.html. Accessed 2023 April 20.
+
+Blocking 
+  Khanna, M. “How to Use Ruby BEGIN and END Blocks.” Scout, Scout APM, (23 Sept. 2021). 
+  https://scoutapm.com/blog/ruby-begin-end. Accessed 2023 April 20. 
+
+How the window works in Ruby 2D - Sections "Getting Atrributes" and "The Update Loop"
+  The Window. Ruby 2D - The window. (n.d.). 
+  https://www.ruby2d.com/learn/window/ Accessed 2023 April 20.
+
+Sprites 
+  Sprites. Ruby 2D - Sprites. (n.d.). 
+  https://www.ruby2d.com/learn/sprites/. Accessed 2023 April 24.
+  
+ Audio
+  Audio. Ruby 2D - Audio. (n.d.). 
+  https://www.ruby2d.com/learn/audio/. Accessed 2023 April 24.
+  
+ 
+
+
