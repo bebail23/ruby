@@ -6,7 +6,7 @@ frog.rb - Original
   reaches the top of the screen, so the player must win in order for the game to finish. 
   The time will be compared to a leaderboard of previous players with the three lowest times. 
   
- snowman.rb - Original 
+ snowmanGame.arb - Original 
   This is a game made with Ruby2D that plays like a traditional game of hangman. 
  
  frog.png - Copied from https://www.pngwing.com
