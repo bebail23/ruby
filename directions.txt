@@ -1,0 +1,52 @@
+Directions for downloading Ruby2D: The directions are also at https://www.ruby2d.com/learn/macos/
+
+On Mac- 
+
+1) Install Homebrew https://brew.sh
+  In your terminal: 
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+2) After installing Homebrew (see their website for details), you can install Ruby using: brew install ruby
+    
+    Make sure to add Ruby to your $PATH variable, for example by running:
+        echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.bash_profile
+        
+3)  To get access to Ruby in the current shell, run source ~/.bash_profile. 
+     Try running ruby --version to check.
+        
+4) Install the gem 
+    In your terminal: 
+    
+    gem install ruby2d
+  
+
+Directions for executing the programs- You will need 12 total extra files in the same folder to run both snowman.rb and frogger.rb
+All files will be provided except dictionary.txt because it is the same one you provided
+For frogger the following files are needed for frog.rb 
+  car.png
+  cartwo.png
+  log.png
+  croc.png
+  frog.png
+  chomp.mp3
+  impact.ogg
+  Space-Jazz.mp3
+  splash.mp3
+  win.wav
+  usernames.txt
+ To run frog.rb: 
+    In the terminal type: ruby frog.rb
+    A window will pop up that asks you to enter a username. 
+    Start typing to fullfill the requirements and hit the enter/return key when ready
+    This will pop up a green play buttonm that you will click with your mouse to begin the game
+    Press the up, side, or down arrow keys to move the frog across the screen
+ For snowman.rb:
+  Only need dictionary.txt (The one you provided)
+ To run snowman.rb:
+    In the terminal type: ruby snowman.rb
+    A window will pop up where you can begin playing 
+    Interact with keys and mouse clicks
+  
+
+
+
