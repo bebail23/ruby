@@ -1,3 +1,8 @@
+# Brooke Bailey & Jessica Mott
+# Common Program: Snowman 
+# April 24 2023
+# Game made using Ruby2D gem. Mimics the game hangman. 
+
 require 'ruby2d'
 
 # Function for restarting game upon pressing replay button after win or loss
